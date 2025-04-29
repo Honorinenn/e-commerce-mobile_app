@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet, Image, } from 'react-native';
+import Login from './Login'; // ← Import the Login component
 
 const Electronic = (props) => {
   const [isStarted, setIsStarted] = useState(props.initialStarted);
@@ -28,7 +23,7 @@ const Electronic = (props) => {
           </TouchableOpacity>
         </>
       ) : (
-        <Text style={styles.thankYouText}>Thank you for starting, {props.name}!</Text>
+        <Login/>
       )}
     </View>
   );
@@ -73,7 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
-  thankYouText: {
+  loginText: {
     fontSize: 22,
     fontWeight: '600',
     color: '#333',
