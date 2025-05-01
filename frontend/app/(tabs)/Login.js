@@ -58,18 +58,6 @@ export default function Login({ onLoginSuccess }) {
 
   return (
     <View style={styles.container}>
-      {step === 'credentials' ? (
-        <>
-          <Text style={styles.title}>Welcome Back!</Text>
-
-          <TextInput
-            style={styles.input}
-            placeholder="Username or email"
-            placeholderTextColor="#000"
-            value={username}
-            onChangeText={setUsername}
-          />
-
           <TextInput
             style={styles.input}
             placeholder="Password"
