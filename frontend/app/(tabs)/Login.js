@@ -1,36 +1,77 @@
+// app/Login.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router'; //  import useRouter
+import {
+  View, Text, TextInput,
+  TouchableOpacity, StyleSheet, Alert
+} from 'react-native';
+import { RollInLeft } from 'react-native-reanimated';
 
-const Login = () => {
-  const [username, setUsername] = useState('');
+export default function Login({ onLoginSuccess }) {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); //  initialize router
 
-  const handleLogin = () => {
-    // Optional: Add validation or API call here
-    router.push('/shopping'); // navigate to shopping page
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Error', 'Please enter both email and password.');
+      return;
+    }
+
+    try {
+      // Use the REACT_APP_API_AUTH_URL environment variable
+      const apiUrl = process.env.REACT_APP_API_AUTH_URL || 'https://fictional-spoon-xxvg46rwgvcxr5-3001.app.github.dev/api/auth';
+
+      // const response = await fetch(`${apiUrl}/login`, {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email, password }),
+      // });
+
+      // if (!response.ok) {
+      //   const errorData = await response.json();
+      //   Alert.alert('Login Failed', errorData.error || 'Invalid credentials.');
+      //   return;
+      // }
+
+      // const data = await response.json();
+
+      // if (!data.user) {
+      //   Alert.alert('Login Failed', 'User data is missing in the response.');
+      //   return;
+      // }
+
+      const mockUser = {
+        id: '12345',
+        username: 'admin',
+        email: 'admin@example.com',
+        role: 'admin', // or 'admin' based on your mock data
+      };
+
+      onLoginSuccess(mockUser); // data.user Pass user data to parent
+    } catch (error) {
+      console.error('Login error:', error);
+      Alert.alert('Error', 'Something went wrong. Please try again.');
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome Back!</Text>
+      <Text style={styles.title}>Login</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="Username or email"
-        placeholderTextColor="#000"
-        value={username}
-        onChangeText={setUsername}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
 
       <TextInput
         style={styles.input}
         placeholder="Password"
-        placeholderTextColor="#000"
-        secureTextEntry
         value={password}
         onChangeText={setPassword}
+        secureTextEntry
       />
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
@@ -38,41 +79,26 @@ const Login = () => {
       </TouchableOpacity>
     </View>
   );
-};
-
-export default Login;
+}
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#D9F3FF',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
+    flex: 1, justifyContent: 'center', alignItems: 'center',
+    padding: 20, backgroundColor: '#fff',
   },
   title: {
-    fontSize: 24,
-    marginBottom: 30,
-    color: '#000',
+    fontSize: 24, fontWeight: 'bold', marginBottom: 20,
   },
   input: {
-    backgroundColor: '#ddd',
-    width: '100%',
-    padding: 12,
-    marginVertical: 10,
-    borderRadius: 6,
-    color: '#000',
+    width: '100%', padding: 10, marginBottom: 15,
+    borderWidth: 1, borderColor: '#ccc', borderRadius: 8,
   },
   button: {
-    backgroundColor: '#5BB8E3',
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 6,
-    marginTop: 20,
+    backgroundColor: '#71C9F8',
+    paddingVertical: 12, paddingHorizontal: 30,
+    borderRadius: 8,
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: '600',
-    fontSize: 16,
+    color: '#000', fontSize: 16, fontWeight: '500',
   },
 });
