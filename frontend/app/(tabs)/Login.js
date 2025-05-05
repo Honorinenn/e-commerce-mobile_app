@@ -20,33 +20,37 @@ export default function Login({ onLoginSuccess }) {
       // Use the REACT_APP_API_AUTH_URL environment variable
       const apiUrl = process.env.REACT_APP_API_AUTH_URL || 'https://fictional-spoon-xxvg46rwgvcxr5-3001.app.github.dev/api/auth';
 
-      // const response = await fetch(`${apiUrl}/login`, {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email, password }),
-      // });
+      console.log('API URL:', apiUrl); // Log the API URL for debugging
 
-      // if (!response.ok) {
-      //   const errorData = await response.json();
-      //   Alert.alert('Login Failed', errorData.error || 'Invalid credentials.');
-      //   return;
-      // }
+      const response = await fetch(`${apiUrl}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-      // const data = await response.json();
+      console.log('Response:', response); // Log the response for debugging
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        Alert.alert('Login Failed', errorData.error || 'Invalid credentials.');
+        return;
+      }
 
-      // if (!data.user) {
-      //   Alert.alert('Login Failed', 'User data is missing in the response.');
-      //   return;
-      // }
+      const data = await response.json();
 
-      const mockUser = {
-        id: '12345',
-        username: 'admin',
-        email: 'admin@example.com',
-        role: 'admin', // or 'admin' based on your mock data
-      };
+      if (!data.user) {
+        Alert.alert('Login Failed', 'User data is missing in the response.');
+        return;
+      }
 
-      onLoginSuccess(mockUser); // data.user Pass user data to parent
+      // const mockUser = {
+      //   id: '12345',
+      //   username: 'admin',
+      //   email: 'admin@example.com',
+      //   role: 'admin', // or 'admin' based on your mock data
+      // };
+
+      onLoginSuccess(data.user); // data.user Pass user data to parent
     } catch (error) {
       console.error('Login error:', error);
       Alert.alert('Error', 'Something went wrong. Please try again.');

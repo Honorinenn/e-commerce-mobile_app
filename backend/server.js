@@ -10,7 +10,6 @@ const chatRoutes = require('./routes/chatRoutes');
 const uploadImagesRoutes = require('./routes/uploadImagesRoutes');
 const { BlobServiceClient } = require('@azure/storage-blob');
 
-const bodyParser = require('body-parser');
 const { connectToDatabase } = require('./utils/database');
 const otpRoutes = require('./routes/otpRoutes');
 const productRoutes = require('./routes/productRoutes'); // Import product routes
@@ -18,7 +17,6 @@ const authRoutes = require('./routes/authRoutes'); // Import authentication rout
 const recommendationRoutes = require('./routes/recommendationRoutes'); // Import recommendation routes
 
 const app = express();
-app.use(bodyParser.json());
 
 // Middleware to parse JSON request bodies
 app.use(express.json());

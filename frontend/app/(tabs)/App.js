@@ -2,45 +2,22 @@
 import React, { useState } from 'react';
 import {
   View, Text, Image,
-  TouchableOpacity, StyleSheet,
+  TouchableOpacity, StyleSheet, Alert
 } from 'react-native';
 
 import Login from './Login';
-import AllProducts from './AllProducts';
-import ProductDetails from './ProductDetails';
-import EditProduct from './EditProduct';
 import landingImg from './landing_screen.png';
+import AllProducts from './AllProducts';
 
 export default function App() {
-  const [stage, setStage] = useState('landing'); // Initialize stage with 'landing'
+  const [stage, setStage] = useState('landing'); // landing → login → home → allProducts
   const [user, setUser] = useState(null); // Store user details after login
-  const [selectedProduct, setSelectedProduct] = useState(null); // Store selected product details
 
   const onGetStarted = () => setStage('login');
+
   const onLoginSuccess = (userData) => {
     setUser(userData); // Save user data
     setStage('home'); // Navigate to home
-  };
-
-  const onShowAllProducts = () => setStage('products');
-
-  const onBackToHome = () => setStage('home');
-
-  const onProductSelect = (product) => {
-    setSelectedProduct(product);
-    setStage('productDetails');
-  };
-
-  const onBackToProducts = () => setStage('products');
-
-  const onEditProduct = (product) => {
-    setSelectedProduct(product);
-    setStage('editProduct');
-  };
-
-  const onSaveProduct = (updatedProduct) => {
-    setSelectedProduct(updatedProduct);
-    setStage('productDetails');
   };
 
   return (
@@ -79,32 +56,15 @@ export default function App() {
           </Text>
           <TouchableOpacity
             style={styles.button}
-            onPress={onShowAllProducts}
+            onPress={() => setStage('allProducts')}
           >
             <Text style={styles.buttonText}>Show All Products</Text>
           </TouchableOpacity>
         </View>
       )}
 
-      {stage === 'products' && (
-        <AllProducts onBack={onBackToHome} onProductSelect={onProductSelect} />
-      )}
-
-      {stage === 'productDetails' && (
-        <ProductDetails
-          product={selectedProduct}
-          onBack={onBackToProducts}
-          user={user}
-          onEdit={onEditProduct}
-        />
-      )}
-
-      {stage === 'editProduct' && (
-        <EditProduct
-          product={selectedProduct}
-          onSave={onSaveProduct}
-          onBack={() => setStage('productDetails')}
-        />
+      {stage === 'allProducts' && (
+        <AllProducts onBack={() => setStage('home')} onProductSelect={() => {}} />
       )}
     </View>
   );
@@ -130,7 +90,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#71C9F8',
     paddingVertical: 12, paddingHorizontal: 30,
     borderRadius: 8,
-    marginTop: 20,
   },
   buttonText: {
     color: '#000', fontSize: 16, fontWeight: '500',
