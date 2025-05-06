@@ -1,10 +1,16 @@
-// Login.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router'; //  import useRouter
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter(); //  initialize router
+
+  const handleLogin = () => {
+    // Optional: Add validation or API call here
+    router.push('/shopping'); // navigate to shopping page
+  };
 
   return (
     <View style={styles.container}>
@@ -27,7 +33,7 @@ const Login = () => {
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>

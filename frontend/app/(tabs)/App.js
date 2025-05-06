@@ -1,4 +1,3 @@
-// app/App.js
 import React, { useState } from 'react';
 import {
   View, Text, Image,
@@ -9,11 +8,24 @@ import Login from './Login';
 import landingImg from './landing_screen.png';
 
 export default function App() {
-  const [stage, setStage] = useState('landing');
-  // landing → login → home
+  const [stage, setStage] = useState('landing'); // 'landing' | 'login' | 'home'
+  const [activeTab, setActiveTab] = useState('Login'); // 'Login' | 'Categories' | 'Shopbot'
 
   const onGetStarted = () => setStage('login');
   const onLoginSuccess = () => setStage('home');
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'Login':
+        return <Text style={styles.tabContent}>Customer Login Screen</Text>;
+      case 'Categories':
+        return <Text style={styles.tabContent}>📦 Categories of Electronics</Text>;
+      case 'Shopbot':
+        return <Text style={styles.tabContent}>🤖 Chat with Shopbot</Text>;
+      default:
+        return null;
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -42,9 +54,33 @@ export default function App() {
       )}
 
       {stage === 'home' && (
-        <Text style={styles.homeText}>
-          🎉 You’re logged in! Welcome to the app.
-        </Text>
+        <View style={{ flex: 1, width: '100%' }}>
+          {/* Tab Bar */}
+          <View style={styles.tabBar}>
+            {['Login', 'Categories', 'Shopbot'].map(tab => (
+              <TouchableOpacity
+                key={tab}
+                style={[
+                  styles.tabButton,
+                  activeTab === tab && styles.activeTab
+                ]}
+                onPress={() => setActiveTab(tab)}
+              >
+                <Text style={[
+                  styles.tabButtonText,
+                  activeTab === tab && styles.activeTabText
+                ]}>
+                  {tab}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          {/* Tab Content */}
+          <View style={styles.tabContentContainer}>
+            {renderTabContent()}
+          </View>
+        </View>
       )}
     </View>
   );
@@ -74,7 +110,37 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#000', fontSize: 16, fontWeight: '500',
   },
-  homeText: {
-    fontSize: 22, fontWeight: '600', color: '#000',
+  tabBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: '#C2ECFF',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderColor: '#aaa',
+  },
+  tabButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+  },
+  tabButtonText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  activeTab: {
+    backgroundColor: '#71C9F8',
+  },
+  activeTabText: {
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  tabContentContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tabContent: {
+    fontSize: 20,
+    color: '#000',
   },
 });
