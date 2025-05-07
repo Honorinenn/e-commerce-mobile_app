@@ -7,13 +7,13 @@ import {
 const products = [
   {
     id: 1,
-    image: require('./assets/phone.png'), // Replace with your local image
-    description: 'iPhone 14 - 128GB',
-    price: '$799',
+    image: require('./iphone16.png'), // Replace with your local image
+    description: 'iPhone 16 - 128GB',
+    price: '$1299',
   },
   {
     id: 2,
-    image: require('./assets/tablet.png'), // Replace with your local image
+    image: require('./Tablets.png'), // Replace with your local image
     description: 'iPad 10.2" - Wi-Fi 64GB',
     price: '$329',
   },
@@ -95,6 +95,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: 'center',
     elevation: 3,
+    width: '50%',
+    
   },
   image: {
     width: 200,
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC107',
     paddingVertical: 10,
     marginTop: 10,
-    width: '100%',
+    width: '50%',
     borderRadius: 4,
   },
   cartButtonText: {

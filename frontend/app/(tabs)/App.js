@@ -32,7 +32,7 @@ export default function App() {
       {stage === 'landing' && (
         <>
           <Text style={styles.welcomeText}>Welcome to</Text>
-          <Text style={styles.brandText}>HEH Electronics</Text>
+          <Text style={styles.brandText}>EStore Electronics</Text>
 
           <Image
             source={landingImg}

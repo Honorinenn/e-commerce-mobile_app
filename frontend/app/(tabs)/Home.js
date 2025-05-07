@@ -7,7 +7,7 @@ import {
   Image,
 } from 'react-native';
 
-const Electronic = (props) => {
+const Home = (props) => {
   const [isStarted, setIsStarted] = useState(props.initialStarted ?? false);
 
   return (
@@ -37,7 +37,7 @@ const Electronic = (props) => {
   );
 };
 
-export default Electronic;
+export default Home;
 
 const styles = StyleSheet.create({
   container: {
