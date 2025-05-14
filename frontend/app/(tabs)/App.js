@@ -8,6 +8,8 @@ import Category from './Category';
 import Shopbot from './Shopbot';
 import Product from './Product';
 import User from './User';
+import styles from './styles'
+import Checkout from './Checkout'
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('Login');
@@ -24,12 +26,14 @@ export default function App() {
         return <Product />;
       case 'User':
         return <User />;
+      case 'Checkout':
+        return <Checkout />;  
       default:
         return <Login />;
     }
   };
 
-  const tabs = ['Login', 'Categories', 'Shopbot', 'Product', 'User'];
+  const tabs = ['Login', 'Categories', 'Shopbot', 'Product', 'User', 'Checkout'];
 
   return (
     <View style={styles.container}>
