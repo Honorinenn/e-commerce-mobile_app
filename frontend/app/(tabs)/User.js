@@ -16,7 +16,7 @@ const User = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: 'https://i.pravatar.cc/150?img=3' }} // Replace with your own avatar if needed
+        source={require('./assets/user.png')} // 👈 Local image here
         style={styles.avatar}
       />
 
