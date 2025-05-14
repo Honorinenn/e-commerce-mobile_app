@@ -9,15 +9,15 @@ import Shopbot from './Shopbot';
 import Product from './Product';
 import User from './User';
 import styles from './styles'
-import Checkout from './Checkout'
+import Home from './Home'
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('Login');
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'Login':
-        return <Login />;
+      case 'Home':
+        return <Home />;
       case 'Categories':
         return <Category />;
       case 'Shopbot':
@@ -26,14 +26,14 @@ export default function App() {
         return <Product />;
       case 'User':
         return <User />;
-      case 'Checkout':
-        return <Checkout />;  
+      case 'Login':
+        return <Login />;  
       default:
-        return <Login />;
+        return <Home />;
     }
   };
 
-  const tabs = ['Login', 'Categories', 'Shopbot', 'Product', 'User', 'Checkout'];
+  const tabs = ['Home', 'Categories', 'Shopbot', 'Product', 'User', 'Login'];
 
   return (
     <View style={styles.container}>
