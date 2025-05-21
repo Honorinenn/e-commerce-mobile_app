@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router'; //  import useRouter
+import {
+  View, Text, TextInput, TouchableOpacity, StyleSheet
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); //  initialize router
+  const navigation = useNavigation();
 
   const handleLogin = () => {
-    // Optional: Add validation or API call here
-    router.push('/shopping'); // navigate to shopping page
+    // You can add validation/authentication here
+    navigation.navigate('User', { username }); // 👈 Pass the username as a parameter
   };
 
   return (
@@ -33,7 +35,10 @@ const Login = () => {
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleLogin} // Use handleLogin instead
+      >
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>
