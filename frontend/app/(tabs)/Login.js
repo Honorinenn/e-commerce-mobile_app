@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigation = useNavigation();
-
-  const handleLogin = () => {
-    // You can add validation/authentication here
-    navigation.navigate('User', { username }); // 👈 Pass the username as a parameter
-  };
+  const navigation = useNavigation(); // Initialize navigation
 
   return (
     <View style={styles.container}>
@@ -37,7 +32,7 @@ const Login = () => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={handleLogin} // Use handleLogin instead
+        onPress={() => navigation.navigate('User')} // 👈 Add this
       >
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
