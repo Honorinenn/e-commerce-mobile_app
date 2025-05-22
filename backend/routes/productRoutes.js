@@ -7,14 +7,36 @@ const {
   updateProductImages,
   deleteProductById,
 } = require('../controllers/productController');
+const Product = require('../models/Product');
 
 const router = express.Router();
 
 // CREATE a new product
 router.post('/', createProduct);
 
-// READ all products
-router.get('/', getAllProducts);
+// READ all products, with optional category filter
+router.get('/', async (req, res) => {
+  try {
+    const filter = {};
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
+    const products = await Product.find(filter);
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch products' });
+  }
+});
+
+// Get all unique product categories
+router.get('/categories', async (req, res) => {
+  try {
+    const categories = await Product.distinct('category');
+    res.json({ categories });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch categories' });
+  }
+});
 
 // READ a single product by ID
 router.get('/:id', getProductById);

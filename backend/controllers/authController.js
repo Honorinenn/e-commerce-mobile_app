@@ -72,4 +72,66 @@ const getUserByUsername = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, getAllUsers, getUserByUsername };
+const registerUser = async (req, res) => {
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: 'Username, email, and password are required' });
+  }
+  try {
+    // Check if email or username already exists
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(409).json({ error: 'Email already in use' });
+    }
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return res.status(409).json({ error: 'Username already in use' });
+    }
+    // Create and save new user
+    const user = new User({ username, email, password });
+    await user.save();
+    res.status(201).json({ message: 'User registered successfully', user: { id: user._id, username: user.username, email: user.email } });
+  } catch (error) {
+    console.error('Register error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+  if (!id) {
+    return res.status(400).json({ error: 'User ID is required' });
+  }
+  try {
+    // Prevent updating password directly here for security
+    if (updateData.password) delete updateData.password;
+    const user = await User.findByIdAndUpdate(id, updateData, { new: true, runValidators: true }).select('-password');
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json({ message: 'User updated successfully', user });
+  } catch (error) {
+    console.error('Update user error:', error);
+    res.status(500).json({ error: 'Failed to update user' });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ error: 'User ID is required' });
+  }
+  try {
+    const user = await User.findByIdAndDelete(id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Delete user error:', error);
+    res.status(500).json({ error: 'Failed to delete user' });
+  }
+};
+
+module.exports = { loginUser, getAllUsers, getUserByUsername, registerUser, updateUser, deleteUser };
