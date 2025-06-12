@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Text,
   View,
@@ -7,32 +7,25 @@ import {
   Image,
 } from 'react-native';
 
-const Home = (props) => {
-  const [isStarted, setIsStarted] = useState(props.initialStarted ?? false);
-
-  return (
+const Home = (props) => {  return (
     <View style={styles.container}>
-      {!isStarted ? (
-        <>
-          <Text style={styles.welcomeText}>Welcome to</Text>
-          <Text style={styles.brandText}>{props.name} Electronics</Text>
-
-          <Image
-            source={require('./landing_screen.png')}
-            style={styles.image}
-            resizeMode="contain"
-          />
-
-          <TouchableOpacity style={styles.button} onPress={() => setIsStarted(true)}>
-            <Text style={styles.buttonText}>Get started</Text>
-          </TouchableOpacity>
-        </>
+      {props.currentUser && props.currentUser.username ? (
+        <Text style={styles.welcomeText}>Welcome back, {props.currentUser.username}!</Text>
       ) : (
-        // Navigate to Login screen
-        <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableOpacity>
+        <Text style={styles.welcomeText}>Welcome to</Text>
       )}
+      <Text style={styles.brandText}>{props.name || 'Shop'} Electronics</Text>
+      <Image
+        source={require('./landing_screen.png')}
+        style={styles.image}
+        resizeMode="contain"
+      />
+      <TouchableOpacity style={styles.button} onPress={props.onGetStarted}>
+        <Text style={styles.buttonText}>Get started</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.chatButton} onPress={props.onChat}>
+        <Text style={styles.chatButtonText}>Chat with Gemma AI</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -68,18 +61,22 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 8,
+    marginBottom: 16,
   },
   buttonText: {
     color: '#000',
     fontSize: 16,
     fontWeight: '500',
   },
-  loginText: {
-    fontSize: 22,
-    fontWeight: '600',
-    color: '#333',
-    backgroundColor: '#71C9F8',
-    padding: 10,
+  chatButton: {
+    backgroundColor: '#3b82f6',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
     borderRadius: 8,
+  },
+  chatButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '500',
   },
 });

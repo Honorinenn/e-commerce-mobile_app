@@ -7,9 +7,9 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
+    "newArchEnabled": true,    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.frontend"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,6 +31,13 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them or set a profile picture.",
+          "cameraPermission": "The app accesses your camera to let you take photos for your profile or products."
         }
       ]
     ],

@@ -1,5 +1,5 @@
 // api/otp.js
-import { API_BASE } from '../constants';
+import { API_BASE } from '../constants/index.js';
 
 export async function requestOtp(email) {
   const resp = await fetch(`${API_BASE}/request-otp`, {
