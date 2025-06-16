@@ -1,4 +1,12 @@
-require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
+
+const envPath = path.resolve(__dirname, '.env');
+if (!fs.existsSync(envPath)) {
+  console.error('Error: .env file is missing. Please create it before starting the server.');
+  process.exit(1);
+}
+require('dotenv').config({ path: envPath });
 const express = require('express');
 const bodyParser = require('body-parser');
 const { connectToDatabase } = require('./utils/database');
