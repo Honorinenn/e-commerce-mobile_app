@@ -1,5 +1,7 @@
 # cs624-tp - e-Commerce-Mobile-App
 
+Hello. Harrison has been making new changes to the project file.
+
 This repository contains a full-stack e-commerce mobile application with a Node.js/Express backend and a React Native (Expo) frontend. The app features product browsing, editing, image gallery, user authentication, and a streaming AI chat assistant (Gemma AI).
 
 ---
